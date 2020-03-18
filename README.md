@@ -2,7 +2,8 @@
 This project allows users to make use of the free Microsoft Azure credits provided by MSDN subscriptions to contribute to the [Folding at Home](https://foldingathome.org/) project and perform biological simulations to aid in the fight against COVID-19.  [Read more](https://www.hpcwire.com/2020/03/16/foldinghome-turns-its-massive-crowdsourced-computer-network-against-covid-19/).
 
 # Getting Started
-1.	If you have not activated your free Azure credits, sign in to my.visualstudio.com and under 'Benefits,' select 'Azure.'   *Note - the benefits referenced here are specific to Professional and Enterprise subscriptions. For other subscription types, please pay attention to the payment options to avoid being unnecessarily charged for services.*
+1.	If you have not activated your free Azure credits, sign in to my.visualstudio.com and under 'Benefits,' select 'Azure.'   
+    *Note - the benefits referenced here are specific to Professional and Enterprise subscriptions. For other subscription types, please pay attention to the payment options to avoid being unnecessarily charged for services.*
 2.	Install the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest).
 3.	Open an elevated PowerShell window (right click - run as administrator) and type `az login`.
 4.	Log in with your MSDN credentials.
