@@ -52,7 +52,7 @@ Just copy that (without the quotes) and paste it into your browser address bar, 
 * *What if I am using my MSDN for other resources and want to contribute on a smaller scale?*
   * In `setup.sh`, change the  parameter for CPUs - line 58 - to match the number of CPUs on your instance type
   * In `fahinit.ps1`, change the parameter in line 6 from `Standard_NC6_Promo` to a smaller and cheaper machine class. View the [Pricing Guide](https://azure.microsoft.com/en-us/pricing/details/virtual-machines/windows/) for information about the different machine classes.
-  * If you change to a computer instance other than a name like `*_NC*_*`, then remove lines 75 - 81 in `setup.sh`
+  * If you change to a computer instance other than a name like `*_NC*_*`, then remove lines 13 in `fahinit.ps1`
 * *What if I no longer wish to use resources for the Folding at Home project?*
   * Either navigate to your resources in the Azure portal and delete the resource group, or run the following command from the terminal: `az group delete --name folding-at-home-rg` (change the `--name` parameter accordingly if you modified the original script). This will tear down all resources created.
 
