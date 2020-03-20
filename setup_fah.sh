@@ -1,3 +1,5 @@
+#exclude typical bin bash at top line because Azure CLI gets confused and won't pass parameters if we do so.
+
 MY_PUBLIC_IP=$1
 
 # A script to install and running Folding@Home
@@ -27,6 +29,9 @@ POWER=full
 # eg. AUTOSTART=true
 AUTOSTART=true
 
+#Should FAHClient automatically discover GPUs?
+GPU=true
+
 ####################
 # Create the config.xml file
 ####################
@@ -40,7 +45,7 @@ sudo cat >> /tmp/fahclient/config.xml <<EOF
   <fold-anon v='false'/>
 
   <!-- Folding Slot Configuration -->
-  <gpu v='true'/>  <!-- If true, attempt to autoconfigure GPUs -->
+  <gpu v='$GPU'/>  <!-- If true, attempt to autoconfigure GPUs -->
 
   <!-- Slot Control
        Options: light, medium or full
@@ -53,9 +58,10 @@ sudo cat >> /tmp/fahclient/config.xml <<EOF
   <team v='$TEAM'/>
 
   <!-- Folding Slots -->
-  <!-- Use all the CPUs
-       Watch out for high load -->
-  <slot id='0' type='CPU'/>
+  <!-- Use all the CPUs -->
+  <slot id='0' type='CPU'>
+     <cpus v='6'/>
+  </slot>
   <slot id='1' type='GPU'/>
 
   <!-- Grant Remote Web Access access web UI from given IP -->
@@ -64,19 +70,6 @@ sudo cat >> /tmp/fahclient/config.xml <<EOF
 
 </config>
 EOF
-
-echo "$(</tmp/fahclient/config.xml )"
-
-####################
-# Install NVIDIA CUDA Drivers
-####################
-CUDA_REPO_PKG=cuda-repo-ubuntu1804_10.2.89-1_amd64.deb
-wget -O /tmp/${CUDA_REPO_PKG} http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/${CUDA_REPO_PKG}
-sudo dpkg -i /tmp/${CUDA_REPO_PKG}
-sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/7fa2af80.pub
-rm -f /tmp/${CUDA_REPO_PKG}
-DEBIAN_FRONTEND=noninteractive sudo apt-get -y update
-DEBIAN_FRONTEND=noninteractive sudo apt-get -y install cuda-drivers
 
 ####################
 # Configuring fahclient
@@ -87,12 +80,15 @@ cd ~/
 sudo wget https://download.foldingathome.org/releases/public/release/fahclient/debian-testing-64bit/v7.4/fahclient_7.4.4_amd64.deb
 sudo wget https://download.foldingathome.org/releases/public/release/fahcontrol/debian-testing-64bit/v7.4/fahcontrol_7.4.4-1_all.deb
 echo "fahclient fahclient/autostart boolean $AUTOSTART" | sudo debconf-set-selections
+echo "fahclient fahclient/gpu boolean $GPU" | sudo debconf-set-selections
 echo "fahclient fahclient/power select $POWER" | sudo debconf-set-selections
 echo "fahclient fahclient/team string $TEAM" | sudo debconf-set-selections
 echo "fahclient fahclient/passkey string $PASSKEY" | sudo debconf-set-selections
 echo "fahclient fahclient/user string $USER" | sudo debconf-set-selections
 sudo dpkg -i fahclient_7.4.4_amd64.deb
 sudo dpkg -i --force-depends fahcontrol_7.4.4-1_all.deb
+
+#cleanup
 rm -f fahclient_7.4.4_amd64.deb
 
 #reconfigure fahclient
