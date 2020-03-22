@@ -23,7 +23,7 @@ This project allows users to make use of the free Microsoft Azure credits provid
 
 You can now view your folding operations from a computer on the same network as the one that executed the azure cli commands. So you run this on your laptop at home, you can access the web control by putting in the IP Address of the service, and port 7396. Example `https://127.0.0.1:7396/` where `127.0.0.1` is the IP of the new Azure VM.
 
-You can find the Azure VM IP address in the script output in teh "publicIPAddress" field. It looks like this:
+You can find the Azure VM IP address in the script output in the "publicIPAddress" field. It looks like this:
 
 ```json
 {
@@ -59,7 +59,7 @@ Just copy that (without the quotes) and paste it into your browser address bar, 
 ## Folding @ Home
 
 * *How do I specify my F@H account to get me and/or my team credits?*
-  * Run the script wit the following parameters
+  * Run the script with the following parameters
     * `-user`: your desired username
     * `-passkey`: your user passkey, if applicable
 * *How do I ensure that the processes will be working toward Coronavirus research?*
